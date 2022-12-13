@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>NRI Rental Houses</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Style the header */
+header {
+  background-color: #666;
+  padding: 10px;
+  text-align: center;
+  font-size: 35px;
+  color: white;
+}
+
+/* Container for flexboxes */
+section {
+  display: -webkit-flex;
+  display: flex;
+}
+
+/* Style the navigation menu */
+nav {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  background: #ccc;
+  padding: 20px;
+}
+
+/* Style the list inside the menu */
+nav ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+/* Style the content */
+article {
+  -webkit-flex: 3;
+  -ms-flex: 3;
+  flex: 3;
+  background-color: #f1f1f1;
+  padding: 10px;
+}
+
+/* Style the footer */
+footer {
+  background-color: #777;
+  padding: 10px;
+  text-align: center;
+  color: white;
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 100%;
+  display: flex;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.container {
+  padding: 2px 16px;
+}
+
+/* Responsive layout - makes the menu and the content (inside the section) sit on top of each other instead of next to each other */
+@media (max-width: 600px) {
+  section {
+    -webkit-flex-direction: column;
+    flex-direction: column;
+  }
+}
+
+
+
+    </style>
+</head>
+<body>
+
+<header>
+    <h2>NRI Rental Houses</h2>
+</header>
+
+<section>
+    <nav>
+        <h3>Filter</h3>
+
+        <h4>BHK</h4>
+        {% if latest_available_house_list %}
+
+        {% for available_house in latest_available_house_list %}
+        <input type="checkbox" id="{{available_house.house_type.name }}" name="{{available_house.house_type.name }}"
+               value="{{available_house.house_type.name }}">
+        <label for="{{available_house.house_type.name }}"> {{available_house.house_type.name }}</label><br>
+        {% endfor %}
+        {% else %}
+        <p>No houses are available.</p>
+        {% endif %}
+
+        <h4>Location</h4>
+        {% if latest_available_house_list %}
+
+        {% for available_house in latest_available_house_list %}
+        <input type="checkbox" id="{{available_house.location }}" name="{{available_house.location }}"
+               value="{{available_house.location }}">
+        <label for="{{available_house.location }}"> {{available_house.location }}</label><br>
+        {% endfor %}
+        {% else %}
+        <p>No houses are available.</p>
+        {% endif %}
+    </nav>
+
+    <article>
+        {% if latest_available_house_list %}
+        <ul>
+            {% for available_house in latest_available_house_list %}
+            <div class="card" onclick="location.href='#'">
+                <div>
+                    <img src="/static/images/default_house_1.jpeg" alt="Avatar" style="width:100%">
+                </div>
+
+                <div class="container">
+                    <h4><b>{{available_house.house_type.name}}</b></h4>
+                    <p>{{ available_house.house_name }} - {{available_house.house_type.name}} -
+                        {{available_house.location }}</p>
+
+                    <p>Contact Number: +91-**********</p>
+                </div>
+            </div>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>No houses are available.</p>
+        {% endif %}
+
+    </article>
+</section>
+
+<footer>
+    <p>.......</p>
+</footer>
+
+</body>
+</html>
+
